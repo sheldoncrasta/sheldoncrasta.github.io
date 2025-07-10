@@ -2,10 +2,100 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="refresh" content="5; url="https://sheldoncrasta.github.io/portfolio/" />
-  <title>Redirecting...</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sheldon Crasta | Career Overview</title>
+
+  <!-- Google Font: Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background-color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .loading-container {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .loading-letter {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      color: #0066cc;
+      opacity: 0;
+      animation: fadeInOut 2.2s ease-in-out forwards;
+      font-weight: 600;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+    }
+
+    @keyframes fadeInOut {
+      0% { opacity: 0; }
+      30% { opacity: 1; }
+      70% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
+    @media (max-width: 480px) {
+      .loading-letter {
+        font-size: clamp(2rem, 7vw, 3rem);
+      }
+    }
+  </style>
 </head>
 <body>
-  <p>Page not found. Redirecting to <a href="/portfolio/">portfolio</a>...</p>
+  <div class="loading-container" id="loadingText"></div>
+
+  <script>
+  const phrases = [
+    "Loading...",
+    "Crafting My Portfolio...",
+    "Aligning My Skills...",     
+    "Preparing the Page...",
+    "Almost Done...",
+    "Completed"
+  ];
+
+  const container = document.getElementById("loadingText");
+  let phraseIndex = 0;
+
+  function animatePhrase() {
+    const phrase = phrases[phraseIndex];
+    container.innerHTML = "";
+
+    [...phrase].forEach((char, i) => {
+      const span = document.createElement("span");
+      span.className = "loading-letter";
+      span.textContent = char;
+      span.style.animationDelay = `${i * 0.07}s`;
+      container.appendChild(span);
+    });
+
+    // If this is the last phrase ("Completed..."), wait 2s after animation and then redirect
+    if (phraseIndex === phrases.length - 1) {
+      clearInterval(interval);
+      setTimeout(() => {
+        window.location.href = "portfolio"; 
+      }, 3000);
+    }
+
+    phraseIndex++;
+  }
+
+  animatePhrase();
+  const interval = setInterval(() => {
+    if (phraseIndex < phrases.length) {
+      animatePhrase();
+    }
+  }, 3000);
+</script>
 </body>
 </html>
